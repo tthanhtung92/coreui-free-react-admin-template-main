@@ -50,6 +50,17 @@ const Toasts = React.lazy(() => import('./views/notifications/toasts/Toasts'))
 
 const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 
+// Accounts
+const MainAccount = React.lazy(() => import('./views/account/main-account/MainAccount'))
+const SubAccount = React.lazy(() => import('./views/account/sub-account/SubAccount'))
+
+//Car
+const CarLocation = React.lazy(() => import('./views/car/car-location/CarLocation'))
+const CarManage = React.lazy(() => import('./views/car/car-manage/CarManage'))
+
+//History
+const WarnHistory = React.lazy(() => import('./views/history/WarnHistory'))
+
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
@@ -95,6 +106,11 @@ const routes = [
   { path: '/notifications/modals', name: 'Modals', element: Modals },
   { path: '/notifications/toasts', name: 'Toasts', element: Toasts },
   { path: '/widgets', name: 'Widgets', element: Widgets },
+  { path: '/account/main-account', name: 'Main Account', element: MainAccount },
+  { path: '/account/sub-account', name: 'Sub Account', element: SubAccount },
+  { path: '/car/car-location', name: 'Car Location', element: CarLocation },
+  { path: '/car/car-manage', name: 'Car Manage', element: CarManage },
+  { path: '/history', name: 'Warning History', element: WarnHistory },
 ]
 
 export default routes
