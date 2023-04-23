@@ -62,7 +62,7 @@ const CarManage = React.lazy(() => import('./views/car/car-manage/CarManage'))
 const WarnHistory = React.lazy(() => import('./views/history/WarnHistory'))
 
 const routes = [
-  { path: '/', exact: true, name: 'Home' },
+  // { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/theme/colors', name: 'Colors', element: Colors },
   { path: '/theme/typography', name: 'Typography', element: Typography },
