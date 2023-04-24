@@ -1,61 +1,54 @@
 /* eslint-disable prettier/prettier */
 import { CCard, CCardBody, CCardHeader, CCol, CTable } from '@coreui/react'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { getAllSubAccountService } from 'src/serivces/subAccount'
 
 const SubAccount = () => {
+  const [dataSource, setDataSource] = useState([])
   const columns = [
     {
-      key: 'id',
-      label: '#',
+      key: 'accountID',
+      label: 'Main Account ID',
       _props: { scope: 'col' },
     },
     {
-      key: 'class',
+      key: 'subAccountID',
+      label: 'Sub Account ID',
       _props: { scope: 'col' },
     },
     {
-      key: 'heading_1',
-      label: 'Heading',
+      key: 'subAccountName',
+      label: 'Full Name',
       _props: { scope: 'col' },
     },
     {
-      key: 'heading_2',
-      label: 'Heading',
+      key: 'subAccountPhone',
+      label: 'Phone',
       _props: { scope: 'col' },
     },
   ]
-  const items = [
-    {
-      id: 1,
-      class: 'Mark',
-      heading_1: 'Otto',
-      heading_2: '@mdo',
-      _cellProps: { id: { scope: 'row' } },
-    },
-    {
-      id: 2,
-      class: 'Jacob',
-      heading_1: 'Thornton',
-      heading_2: '@fat',
-      _cellProps: { id: { scope: 'row' } },
-    },
-    {
-      id: 3,
-      class: 'Larry the Bird',
-      heading_2: '@twitter',
-      _cellProps: { id: { scope: 'row' }, class: { colSpan: 2 } },
-    },
-  ]
+
+  useEffect(() => {
+    getData()
+  }, [])
+
+  const getData = async () => {
+    const res = await getAllSubAccountService()
+    if (res.status === 200) {
+      setDataSource(res.data)
+    }
+    console.log(res.data)
+  }
+
   return (
     <div>
       <CCol xs={12}>
         <CCard className="mb-4">
           <CCardHeader>
             <strong>Sub Account</strong>
-            {/* <small>Hoverable rows</small> */}
           </CCardHeader>
           <CCardBody>
-            <CTable columns={columns} items={items} />
+            <CTable columns={columns} items={dataSource} />
           </CCardBody>
         </CCard>
       </CCol>

@@ -8,7 +8,7 @@ const MainAccount = () => {
   const columns = [
     {
       key: 'accountID',
-      label: '#',
+      label: 'Account ID',
       _props: { scope: 'col' },
     },
     {
@@ -23,7 +23,7 @@ const MainAccount = () => {
     },
     {
       key: 'password',
-      label: 'Pass WORD',
+      label: 'Password',
       _props: { scope: 'col' },
     },
     {
@@ -31,18 +31,23 @@ const MainAccount = () => {
       label: 'Email',
       _props: { scope: 'col' },
     },
+    {
+      key: 'phone',
+      label: 'Phone',
+      _props: { scope: 'col' },
+    },
   ]
 
   useEffect(() => {
-    getAllAccount()
+    getData()
   }, [])
 
-  const getAllAccount = async () => {
+  const getData = async () => {
     const res = await getAllAcountService()
     if (res.status === 200) {
       setDataSource(res.data)
     }
-    console.log(res)
+    console.log(res.data)
   }
   return (
     <div>

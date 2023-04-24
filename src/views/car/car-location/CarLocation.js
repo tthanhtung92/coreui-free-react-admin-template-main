@@ -1,51 +1,40 @@
 /* eslint-disable prettier/prettier */
 import { CCard, CCardBody, CCardHeader, CCol, CTable } from '@coreui/react'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { getAllCarLocationService } from 'src/serivces/carLocation'
 
 const CarLocation = () => {
+  const [dataSource, setDataSource] = useState([])
   const columns = [
     {
-      key: 'id',
+      key: 'carLocatorID',
       label: '#',
       _props: { scope: 'col' },
     },
     {
-      key: 'class',
+      key: 'carManagementID',
+      label: 'Car ID',
       _props: { scope: 'col' },
     },
     {
-      key: 'heading_1',
-      label: 'Heading',
-      _props: { scope: 'col' },
-    },
-    {
-      key: 'heading_2',
-      label: 'Heading',
+      key: 'location',
+      label: 'Location',
       _props: { scope: 'col' },
     },
   ]
-  const items = [
-    {
-      id: 1,
-      class: 'Mark',
-      heading_1: 'Otto',
-      heading_2: '@mdo',
-      _cellProps: { id: { scope: 'row' } },
-    },
-    {
-      id: 2,
-      class: 'Jacob',
-      heading_1: 'Thornton',
-      heading_2: '@fat',
-      _cellProps: { id: { scope: 'row' } },
-    },
-    {
-      id: 3,
-      class: 'Larry the Bird',
-      heading_2: '@twitter',
-      _cellProps: { id: { scope: 'row' }, class: { colSpan: 2 } },
-    },
-  ]
+
+  useEffect(() => {
+    getData()
+  }, [])
+
+  const getData = async () => {
+    const res = await getAllCarLocationService()
+    if (res.status === 200) {
+      setDataSource(res.data)
+    }
+    console.log(res.data)
+  }
+
   return (
     <div>
       <CCol xs={12}>
@@ -55,7 +44,7 @@ const CarLocation = () => {
             {/* <small>Hoverable rows</small> */}
           </CCardHeader>
           <CCardBody>
-            <CTable columns={columns} items={items} />
+            <CTable columns={columns} items={dataSource} />
           </CCardBody>
         </CCard>
       </CCol>

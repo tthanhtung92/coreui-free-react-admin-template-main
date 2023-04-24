@@ -1,61 +1,54 @@
 /* eslint-disable prettier/prettier */
 import { CCard, CCardBody, CCardHeader, CCol, CTable } from '@coreui/react'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { getAllHistoryService } from 'src/serivces/history'
 
 const WarnHistory = () => {
+  const [dataSource, setDataSource] = useState([])
   const columns = [
     {
-      key: 'id',
-      label: '#',
+      key: 'accountID',
+      label: 'Account ID',
       _props: { scope: 'col' },
     },
     {
-      key: 'class',
+      key: 'carManagementID',
+      label: 'Car ID',
       _props: { scope: 'col' },
     },
     {
-      key: 'heading_1',
-      label: 'Heading',
+      key: 'historyName',
+      label: 'Notification Content',
       _props: { scope: 'col' },
     },
     {
-      key: 'heading_2',
-      label: 'Heading',
+      key: 'historyDate',
+      label: 'Warning Time',
       _props: { scope: 'col' },
     },
   ]
-  const items = [
-    {
-      id: 1,
-      class: 'Mark',
-      heading_1: 'Otto',
-      heading_2: '@mdo',
-      _cellProps: { id: { scope: 'row' } },
-    },
-    {
-      id: 2,
-      class: 'Jacob',
-      heading_1: 'Thornton',
-      heading_2: '@fat',
-      _cellProps: { id: { scope: 'row' } },
-    },
-    {
-      id: 3,
-      class: 'Larry the Bird',
-      heading_2: '@twitter',
-      _cellProps: { id: { scope: 'row' }, class: { colSpan: 2 } },
-    },
-  ]
+
+  useEffect(() => {
+    getData()
+  }, [])
+
+  const getData = async () => {
+    const res = await getAllHistoryService()
+    if (res.status === 200) {
+      setDataSource(res.data)
+    }
+    console.log(res.data)
+  }
+
   return (
     <div>
       <CCol xs={12}>
         <CCard className="mb-4">
           <CCardHeader>
             <strong>Warning History</strong>
-            {/* <small>Hoverable rows</small> */}
           </CCardHeader>
           <CCardBody>
-            <CTable columns={columns} items={items} />
+            <CTable columns={columns} items={dataSource} />
           </CCardBody>
         </CCard>
       </CCol>

@@ -6,7 +6,6 @@ import { CBadge } from '@coreui/react'
 
 export const AppSidebarNav = ({ items }) => {
   const location = useLocation()
-  console.log(items)
   const navLink = (name, icon, badge) => {
     return (
       <>
