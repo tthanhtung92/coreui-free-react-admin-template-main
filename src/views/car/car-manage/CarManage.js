@@ -32,15 +32,15 @@ const CarManage = () => {
       _props: { scope: 'col' },
     },
     {
+      key: 'status',
+      label: 'Status',
+      _props: { scope: 'col' },
+    },
+    {
       key: 'carlocators',
       label: 'Location',
       _props: { scope: 'col' },
     },
-    // {
-    //   key: 'status',
-    //   label: 'Status',
-    //   _props: { scope: 'col' },
-    // },
   ]
 
   useEffect(() => {
@@ -50,9 +50,15 @@ const CarManage = () => {
   const getData = async () => {
     const res = await getAllCarService()
     if (res.status === 200) {
-      setDataSource(res.data)
+      const car = res.data
+      const newData = car.map((item, i) => ({
+        ...item,
+        status: res.data[i].status.toString(),
+      }))
+      console.log(newData)
+      setDataSource(newData)
     }
-    console.log(res.data)
+    // console.log(res.data)
   }
 
   return (

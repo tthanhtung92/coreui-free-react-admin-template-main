@@ -35,9 +35,15 @@ const WarnHistory = () => {
   const getData = async () => {
     const res = await getAllHistoryService()
     if (res.status === 200) {
-      setDataSource(res.data)
+      const resHistory = res.data
+      const newData = resHistory.map((item, i) => ({
+        ...item,
+        historyDate: new Date(Date.parse(res.data[i].historyDate)).toString().slice(0, 24),
+      }))
+      console.log(newData)
+      setDataSource(newData)
     }
-    console.log(res.data)
+    // console.log(res.data)
   }
 
   return (
