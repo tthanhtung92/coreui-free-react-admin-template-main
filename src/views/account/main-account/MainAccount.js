@@ -33,14 +33,13 @@ const MainAccount = () => {
     },
   ]
 
-
   useEffect(() => {
     getAllAccount()
   }, [])
 
   const getAllAccount = async () => {
-    const res = await getAllAcountService();
-    if(res.status===200){
+    const res = await getAllAcountService()
+    if (res.status === 200) {
       setDataSource(res.data)
     }
     console.log(res)
@@ -50,8 +49,7 @@ const MainAccount = () => {
       <CCol xs={12}>
         <CCard className="mb-4">
           <CCardHeader>
-            <strong>Main Account 222</strong>
-            {/* <small>Hoverable rows</small> */}
+            <strong>Main Account</strong>
           </CCardHeader>
           <CCardBody>
             <CTable columns={columns} items={dataSource} />
