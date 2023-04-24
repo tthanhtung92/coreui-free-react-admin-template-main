@@ -105,10 +105,10 @@ const routes = [
   { path: '/notifications/modals', name: 'Modals', element: Modals },
   { path: '/notifications/toasts', name: 'Toasts', element: Toasts },
   { path: '/widgets', name: 'Widgets', element: Widgets },
-  { path: '/account/main-account', name: 'Main Account', element: MainAccount },
-  { path: '/account/sub-account', name: 'Sub Account', element: SubAccount },
-  { path: '/car/car-location', name: 'Car Location', element: CarLocation },
-  { path: '/car/car-manage', name: 'Car Manage', element: CarManage },
+  { path: '/main-account', name: 'Main Account', element: MainAccount },
+  { path: '/sub-account', name: 'Sub Account', element: SubAccount },
+  { path: '/car-location', name: 'Car Location', element: CarLocation },
+  { path: '/car-manage', name: 'Car Manage', element: CarManage },
   { path: '/history', name: 'Warning History', element: WarnHistory },
 ]
 

@@ -12,12 +12,12 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Main Account',
-        to: '/account/main-account',
+        to: '/main-account',
       },
       {
         component: CNavItem,
         name: 'Sub Account',
-        to: '/account/sub-account',
+        to: '/sub-account',
       },
     ],
   },
@@ -29,12 +29,12 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Car Manage',
-        to: '/car/car-manage',
+        to: '/car-manage',
       },
       {
         component: CNavItem,
         name: 'Car Location',
-        to: '/car/car-location',
+        to: '/car-location',
       },
     ],
   },
