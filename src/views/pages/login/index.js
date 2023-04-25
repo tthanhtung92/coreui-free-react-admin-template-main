@@ -16,7 +16,8 @@ import {
 } from '@coreui/react'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-// import authApi from 'src/api/authApi'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { useAuth } from 'src/contexts/AuthProvider'
 import { login } from 'src/services/auth'
 
@@ -26,6 +27,18 @@ const Login = () => {
   const [pwd, setPwd] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
+
+  const notifyErr = () =>
+    toast.error('Wrong Username or Password!', {
+      position: 'top-right',
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'colored',
+    })
 
   const handleSubmit = async () => {
     try {
@@ -42,6 +55,8 @@ const Login = () => {
         setUser('')
         setPwd('')
         navigate('/')
+      } else {
+        notifyErr()
       }
       setIsLoading(false)
     } catch (err) {
@@ -103,6 +118,18 @@ const Login = () => {
           </CCol>
         </CRow>
       </CContainer>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </div>
   )
 }
