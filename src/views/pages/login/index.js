@@ -18,7 +18,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 // import authApi from 'src/api/authApi'
 import { useAuth } from 'src/contexts/AuthProvider'
-import { login } from 'src/serivces/auth'
+import { login } from 'src/services/auth'
 
 const Login = () => {
   const { setUserProfile } = useAuth()

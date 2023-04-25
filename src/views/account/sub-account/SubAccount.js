@@ -1,30 +1,44 @@
 /* eslint-disable prettier/prettier */
-import { CCard, CCardBody, CCardHeader, CCol, CTable } from '@coreui/react'
+import { CCard, CCardBody, CCardHeader, CCol } from '@coreui/react'
+import { DataGrid } from '@mui/x-data-grid'
 import React, { useEffect, useState } from 'react'
-import { getAllSubAccountService } from 'src/serivces/subAccount'
+import { getAllSubAccountService } from 'src/services/subAccount'
 
 const SubAccount = () => {
   const [dataSource, setDataSource] = useState([])
+
   const columns = [
     {
-      key: 'accountID',
-      label: 'Main Account ID',
-      _props: { scope: 'col' },
+      field: 'accountID',
+      headerName: 'Main Account ID',
+      flex: 0.4,
+      headerAlign: 'left',
+      renderHeader: () => <strong>{'Main Account ID'}</strong>,
     },
     {
-      key: 'subAccountID',
-      label: 'Sub Account ID',
-      _props: { scope: 'col' },
+      field: 'subAccountID',
+      headerName: 'Sub Account ID',
+      flex: 0.4,
+      headerAlign: 'left',
+      editable: false,
+      renderHeader: () => <strong>{'Sub Account ID'}</strong>,
     },
     {
-      key: 'subAccountName',
-      label: 'Full Name',
-      _props: { scope: 'col' },
+      field: 'subAccountName',
+      headerName: 'Full Name',
+      flex: 1,
+      headerAlign: 'left',
+      editable: false,
+      renderHeader: () => <strong>{'Full Name'}</strong>,
     },
+
     {
-      key: 'subAccountPhone',
-      label: 'Phone',
-      _props: { scope: 'col' },
+      field: 'subAccountPhone',
+      headerName: 'Phone',
+      flex: 1,
+      headerAlign: 'left',
+      editable: false,
+      renderHeader: () => <strong>{'Phone'}</strong>,
     },
   ]
 
@@ -48,7 +62,21 @@ const SubAccount = () => {
             <strong>Sub Account</strong>
           </CCardHeader>
           <CCardBody>
-            <CTable columns={columns} items={dataSource} />
+            <DataGrid
+              getRowId={(dataSource) => dataSource.subAccountID}
+              rows={dataSource}
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: {
+                    pageSize: 10,
+                  },
+                },
+              }}
+              pageSizeOptions={[10]}
+              checkboxSelection={false}
+              disableRowSelectionOnClick
+            />
           </CCardBody>
         </CCard>
       </CCol>

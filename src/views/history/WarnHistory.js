@@ -1,30 +1,71 @@
 /* eslint-disable prettier/prettier */
-import { CCard, CCardBody, CCardHeader, CCol, CTable } from '@coreui/react'
+import { CCard, CCardBody, CCardHeader, CCol } from '@coreui/react'
+import { DataGrid } from '@mui/x-data-grid'
 import React, { useEffect, useState } from 'react'
-import { getAllHistoryService } from 'src/serivces/history'
+import { getAllHistoryService } from 'src/services/history'
 
 const WarnHistory = () => {
   const [dataSource, setDataSource] = useState([])
+
+  const statusFormatter = (cell) => {
+    return cell === true ? (
+      <div
+        style={{
+          color: '#00c853',
+          fontWeight: 600,
+        }}
+      >
+        Successful
+      </div>
+    ) : (
+      <div
+        style={{
+          color: '#d50000',
+          fontWeight: 600,
+        }}
+      >
+        Unsuccessful
+      </div>
+    )
+  }
+
   const columns = [
     {
-      key: 'accountID',
-      label: 'Account ID',
-      _props: { scope: 'col' },
+      field: 'historyID',
+      headerName: 'ID',
+      flex: 0.2,
+      headerAlign: 'left',
+      renderHeader: () => <strong>{'ID'}</strong>,
     },
     {
-      key: 'carManagementID',
-      label: 'Car ID',
-      _props: { scope: 'col' },
+      field: 'historyName',
+      headerName: 'Notification Content',
+      flex: 1,
+      headerAlign: 'left',
+      editable: false,
+      renderHeader: () => <strong>{'Notification Content'}</strong>,
     },
     {
-      key: 'historyName',
-      label: 'Notification Content',
-      _props: { scope: 'col' },
+      field: 'historyDate',
+      headerName: 'Date Time',
+      flex: 1,
+      headerAlign: 'left',
+      editable: false,
+      type: 'dateTime',
+      renderHeader: () => <strong>{'Date Time'}</strong>,
+      valueGetter: ({ value }) => value && new Date(value),
     },
+
     {
-      key: 'historyDate',
-      label: 'Warning Time',
-      _props: { scope: 'col' },
+      field: 'historyStatus',
+      headerName: 'Status',
+      flex: 1,
+      headerAlign: 'left',
+      editable: false,
+      renderHeader: () => <strong>{'Status'}</strong>,
+      renderCell: (params) => {
+        return statusFormatter(params.value)
+      },
     },
   ]
 
@@ -54,7 +95,21 @@ const WarnHistory = () => {
             <strong>Warning History</strong>
           </CCardHeader>
           <CCardBody>
-            <CTable columns={columns} items={dataSource} />
+            <DataGrid
+              getRowId={(dataSource) => dataSource.historyID}
+              rows={dataSource}
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: {
+                    pageSize: 10,
+                  },
+                },
+              }}
+              pageSizeOptions={[10]}
+              checkboxSelection={false}
+              disableRowSelectionOnClick
+            />
           </CCardBody>
         </CCard>
       </CCol>

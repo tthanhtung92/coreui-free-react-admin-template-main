@@ -1,33 +1,71 @@
-import React from 'react'
+import { cilOptions } from '@coreui/icons'
+import CIcon from '@coreui/icons-react'
 import {
-  CRow,
   CCol,
   CDropdown,
-  CDropdownMenu,
   CDropdownItem,
+  CDropdownMenu,
   CDropdownToggle,
+  CRow,
   CWidgetStatsA,
 } from '@coreui/react'
-import { getStyle } from '@coreui/utils'
 import { CChartBar, CChartLine } from '@coreui/react-chartjs'
-import CIcon from '@coreui/icons-react'
-import { cilArrowBottom, cilArrowTop, cilOptions } from '@coreui/icons'
+import { getStyle } from '@coreui/utils'
+import React, { useEffect, useState } from 'react'
+import { getTotalAccountService } from 'src/services/totalAccount'
+import { getTotalSubAccountService } from 'src/services/totalSubAccount'
+import { getTotalCarService } from 'src/services/totalCar'
+import { getTotalHistoryService } from 'src/services/totalHistory'
 
 const WidgetsDropdown = () => {
+  const [totalAccount, setTotalAccount] = useState(0)
+  const [totalSubAccount, setTotalSubAccount] = useState(0)
+  const [totalCar, setTotalCar] = useState(0)
+  const [totalHistory, setTotalHistory] = useState(0)
+
+  useEffect(() => {
+    getTotalAccount()
+    getTotalSubAccount()
+    getTotalCar()
+    getTotalHistory()
+  }, [])
+
+  const getTotalAccount = async () => {
+    const res = await getTotalAccountService()
+    if (res.status === 200) {
+      setTotalAccount(res.data)
+    }
+    console.log(res)
+  }
+
+  const getTotalSubAccount = async () => {
+    const res = await getTotalSubAccountService()
+    if (res.status === 200) {
+      setTotalSubAccount(res.data)
+    }
+  }
+
+  const getTotalCar = async () => {
+    const res = await getTotalCarService()
+    if (res.status === 200) {
+      setTotalCar(res.data)
+    }
+  }
+
+  const getTotalHistory = async () => {
+    const res = await getTotalHistoryService()
+    if (res.status === 200) {
+      setTotalHistory(res.data)
+    }
+  }
+
   return (
     <CRow>
       <CCol sm={6} lg={3}>
         <CWidgetStatsA
           className="mb-4"
           color="primary"
-          value={
-            <>
-              26K{' '}
-              <span className="fs-6 fw-normal">
-                (-12.4% <CIcon icon={cilArrowBottom} />)
-              </span>
-            </>
-          }
+          value={<>{totalAccount} </>}
           title="Users"
           action={
             <CDropdown alignment="end">
@@ -107,15 +145,8 @@ const WidgetsDropdown = () => {
         <CWidgetStatsA
           className="mb-4"
           color="info"
-          value={
-            <>
-              $6.200{' '}
-              <span className="fs-6 fw-normal">
-                (40.9% <CIcon icon={cilArrowTop} />)
-              </span>
-            </>
-          }
-          title="Income"
+          value={<>{totalSubAccount} </>}
+          title="SubUsers"
           action={
             <CDropdown alignment="end">
               <CDropdownToggle color="transparent" caret={false} className="p-0">
@@ -193,15 +224,8 @@ const WidgetsDropdown = () => {
         <CWidgetStatsA
           className="mb-4"
           color="warning"
-          value={
-            <>
-              2.49{' '}
-              <span className="fs-6 fw-normal">
-                (84.7% <CIcon icon={cilArrowTop} />)
-              </span>
-            </>
-          }
-          title="Conversion Rate"
+          value={<>{totalCar} </>}
+          title="Total of Car"
           action={
             <CDropdown alignment="end">
               <CDropdownToggle color="transparent" caret={false} className="p-0">
@@ -266,15 +290,8 @@ const WidgetsDropdown = () => {
         <CWidgetStatsA
           className="mb-4"
           color="danger"
-          value={
-            <>
-              44K{' '}
-              <span className="fs-6 fw-normal">
-                (-23.6% <CIcon icon={cilArrowBottom} />)
-              </span>
-            </>
-          }
-          title="Sessions"
+          value={<>{totalHistory} </>}
+          title="Total of Warning"
           action={
             <CDropdown alignment="end">
               <CDropdownToggle color="transparent" caret={false} className="p-0">
