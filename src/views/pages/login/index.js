@@ -28,18 +28,6 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
 
-  const notifyErr = () =>
-    toast.error('Wrong Username or Password!', {
-      position: 'top-right',
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'colored',
-    })
-
   const handleSubmit = async () => {
     try {
       setIsLoading(true)
@@ -47,16 +35,39 @@ const Login = () => {
         accounName: user,
         password: pwd,
       })
+      console.log(res)
       if (res.status === 200) {
-        const accessToken = res?.data?.token
-        const roles = res?.data?.role
-        localStorage.setItem('accessToken', res?.data?.token)
-        setUserProfile({ user, roles, accessToken })
-        setUser('')
-        setPwd('')
-        navigate('/')
+        if (res.data.role !== 'Admin') {
+          toast.warn('This account is not allowed to access this site!', {
+            position: 'top-right',
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored',
+          })
+        } else {
+          const accessToken = res?.data?.token
+          const roles = res?.data?.role
+          localStorage.setItem('accessToken', res?.data?.token)
+          setUserProfile({ user, roles, accessToken })
+          setUser('')
+          setPwd('')
+          navigate('/')
+        }
       } else {
-        notifyErr()
+        toast.error('Check your Username or Password!', {
+          position: 'top-right',
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'colored',
+        })
       }
       setIsLoading(false)
     } catch (err) {
